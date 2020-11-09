@@ -1,14 +1,14 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Signin from '../views/Signin.vue';
+import Signin from "../views/Signin.vue";
 
 Vue.use(VueRouter);
 
 const routes = [
   {
-    path: '/',
-    name: 'Signin',
-    component: Signin,
+    path: "/",
+    name: "Signin",
+    component: Signin
   }
 ];
 

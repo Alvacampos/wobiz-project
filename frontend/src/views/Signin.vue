@@ -56,28 +56,28 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex';
-import InputComponent from '@/components/InputComponent.vue';
-import ButtonComponent from '@/components/ButtonComponent.vue';
-import LogoComponent from '@/components/LogoComponent.vue';
-import ErrorComponent from '@/components/ErrorComponent.vue';
+import { mapGetters, mapActions } from "vuex";
+import InputComponent from "@/components/InputComponent.vue";
+import ButtonComponent from "@/components/ButtonComponent.vue";
+import LogoComponent from "@/components/LogoComponent.vue";
+import ErrorComponent from "@/components/ErrorComponent.vue";
 
 export default {
-  name: 'Signin',
+  name: "Signin",
   components: {
     InputComponent,
     ButtonComponent,
     LogoComponent,
-    ErrorComponent,
+    ErrorComponent
   },
   data() {
     return {
       mailMust: false,
-      passwordMust: false,
+      passwordMust: false
     };
   },
   methods: {
-    ...mapActions(['changeMail', 'changePassword', 'signIn']),
+    ...mapActions(["changeMail", "changePassword", "signIn"]),
     mailUpdated(value) {
       this.changeMail(value);
     },
@@ -102,12 +102,16 @@ export default {
           this.passwordMust = data;
         }
       } else {
+        if (!this.getUserPassword) {
+          this.mailMust = data;
+          this.passwordMust = data;
+        }
         this.mailMust = data;
       }
-    },
+    }
   },
   computed: {
-    ...mapGetters(['userEmail', 'userPassword', 'userData', 'errorSignIn']),
+    ...mapGetters(["userEmail", "userPassword", "userData", "errorSignIn"]),
     getUserEmail() {
       return this.userEmail;
     },
@@ -117,8 +121,8 @@ export default {
     ifSignInError() {
       if (this.errorSignIn) return true;
       else return false;
-    },
-  },
+    }
+  }
 };
 </script>
 

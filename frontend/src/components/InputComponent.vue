@@ -9,26 +9,26 @@
 
 <script>
 export default {
-  name: 'InputComponent',
+  name: "InputComponent",
   props: {
     planceHolder: {
       type: String,
-      required: true,
+      required: true
     },
     inputType: {
       type: String,
-      required: true,
+      required: true
     },
     userData: {
       type: String,
-      requied: false,
-    },
+      requied: false
+    }
   },
   methods: {
     updateData(data) {
-      this.$emit('dataInput', data.target.value);
-    },
-  },
+      this.$emit("dataInput", data.target.value);
+    }
+  }
 };
 </script>
 

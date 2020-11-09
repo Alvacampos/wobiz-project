@@ -6,17 +6,17 @@
 
 <script>
 export default {
-  name: 'ButtonComponent',
+  name: "ButtonComponent",
   props: {
     title: {
       type: String,
-      required: true,
+      required: true
     },
     compClass: {
       type: String,
-      required: true,
-    },
-  },
+      required: true
+    }
+  }
 };
 </script>
 

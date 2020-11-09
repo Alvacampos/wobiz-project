@@ -6,13 +6,13 @@
 
 <script>
 export default {
-  name: 'ErrorComponent',
+  name: "ErrorComponent",
   props: {
     msg: {
       type: String,
-      required: true,
-    },
-  },
+      required: true
+    }
+  }
 };
 </script>
 
