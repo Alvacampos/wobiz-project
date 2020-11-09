@@ -11,12 +11,13 @@ export default new Vuex.Store({
       password: null,
     },
     credentials: null,
-    error: null
+    error: null,
   },
   getters: {
     userData: (state) => state.userData,
     userEmail: (state) => state.userData.mail,
     userPassword: (state) => state.userData.password,
+    errorSignIn: (state) => state.error,
   },
   mutations: {
     changeMail(state, payload) {
@@ -42,12 +43,11 @@ export default new Vuex.Store({
     signIn: async ({ commit }, payload) => {
       try {
         const auth = await signIn.signin(payload);
-        console.log(auth);
         commit('getSignInData', auth.data);
         commit('errorSignIn', null);
       } catch (e) {
         console.log(e);
-        commit('errorSignIn', e.data);
+        commit('errorSignIn', e);
       }
     },
   },

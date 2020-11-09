@@ -1,44 +1,51 @@
 <template>
   <b-container>
     <b-row>
-      <!-- <b-col> -->
-      <div class="signin">
-        <logo-component />
-        <b-row>
-          <legend>Email</legend>
-          <input-component
-            class="input-signin"
-            :input-type="'mail'"
-            :planceHolder="'ej: usuario@mail.com'"
-            :userData="getUserEmail"
-            @dataInput="mailUpdated"
-          />
-          <error-component :msg="'Necesitamos tu email'" v-if="mailMust" />
-        </b-row>
-        <b-row class="signin-password">
-          <legend>Contraseña</legend>
-          <input-component
-            class="input-signin"
-            :input-type="'password'"
-            :planceHolder="'Escribe tu contraseña'"
-            :userData="getUserPassword"
-            @dataInput="passwordUpdated"
-          />
-          <error-component
-            :msg="'Necesitamos tu contraseña'"
-            v-if="passwordMust"
-          />
-          <a id="recover-password" href="/">¿Olvidaste tu contraseña?</a>
-        </b-row>
-        <b-row>
-          <button-component
-            :comp-class="'button-signin'"
-            :title="'Ingresar a mi cuenta'"
-            @btn-press="signInReady"
-          />
-        </b-row>
-      </div>
-      <!-- </b-col> -->
+      <b-col>
+        <div class="signin">
+          <logo-component />
+          <b-row>
+            <error-component
+              class="error-signin"
+              :msg="
+                'Tu email o contraseña son incorrectos. Revisalos y vuelve a intentar.'
+              "
+              v-if="ifSignInError"
+            />
+            <legend>Email</legend>
+            <input-component
+              class="input-signin"
+              :input-type="'mail'"
+              :planceHolder="'ej: usuario@mail.com'"
+              :userData="getUserEmail"
+              @dataInput="mailUpdated"
+            />
+            <error-component :msg="'Necesitamos tu email'" v-if="mailMust" />
+          </b-row>
+          <b-row class="signin-password">
+            <legend>Contraseña</legend>
+            <input-component
+              class="input-signin"
+              :input-type="'password'"
+              :planceHolder="'Escribe tu contraseña'"
+              :userData="getUserPassword"
+              @dataInput="passwordUpdated"
+            />
+            <error-component
+              :msg="'Necesitamos tu contraseña'"
+              v-if="passwordMust"
+            />
+            <a id="recover-password" href="/">¿Olvidaste tu contraseña?</a>
+          </b-row>
+          <b-row>
+            <button-component
+              :comp-class="'button-signin'"
+              :title="'Ingresar a mi cuenta'"
+              @btn-press="signInReady"
+            />
+          </b-row>
+        </div>
+      </b-col>
       <b-col class="signup-section">
         <p class="signup-text">¿No tienes una cuenta en Wobiz?</p>
         <button-component :comp-class="'signup'" :title="'Crea tu cuenta'" />
@@ -50,10 +57,10 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
-import InputComponent from '../components/InputComponent.vue';
-import ButtonComponent from '../components/ButtonComponent.vue';
-import LogoComponent from '../components/LogoComponent.vue';
-import ErrorComponent from '../components/ErrorComponent.vue';
+import InputComponent from '@/components/InputComponent.vue';
+import ButtonComponent from '@/components/ButtonComponent.vue';
+import LogoComponent from '@/components/LogoComponent.vue';
+import ErrorComponent from '@/components/ErrorComponent.vue';
 
 export default {
   name: 'Signin',
@@ -80,14 +87,12 @@ export default {
     signInReady(data) {
       //eslint-disable-next-line
       const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-      console.log(re.test(String(this.userEmail).toLowerCase()));
       if (
         re.test(String(this.userEmail).toLowerCase()) &&
         this.getUserPassword
       ) {
         if (this.getUserPassword.length >= 6) {
           this.signIn(this.userData);
-          alert('Welcome!');
         } else this.passwordMust = data;
       } else if (re.test(String(this.userEmail).toLowerCase())) {
         if (!this.getUserPassword || this.getUserPassword.length >= 6) {
@@ -102,12 +107,16 @@ export default {
     },
   },
   computed: {
-    ...mapGetters(['userEmail', 'userPassword', 'userData']),
+    ...mapGetters(['userEmail', 'userPassword', 'userData', 'errorSignIn']),
     getUserEmail() {
       return this.userEmail;
     },
     getUserPassword() {
       return this.userPassword;
+    },
+    ifSignInError() {
+      if (this.errorSignIn) return true;
+      else return false;
     },
   },
 };
@@ -171,6 +180,10 @@ legend {
 
 .signup-img {
   max-width: -webkit-fill-available;
+  height: 100%;
+}
+
+.error-signin {
   height: 100%;
 }
 

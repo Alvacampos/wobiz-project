@@ -14,7 +14,6 @@ const apiClient = axios.create({
 
 export default {
   signin(user) {
-    console.log('asd')
     return apiClient.post("/login",user);
   },
 };
