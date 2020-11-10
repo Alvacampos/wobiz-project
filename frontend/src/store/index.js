@@ -1,6 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import signIn from "@/services/auth.service.js";
+import Cookies from "js-cookie";
 
 Vue.use(Vuex);
 
@@ -10,7 +11,6 @@ export default new Vuex.Store({
       mail: null,
       password: null
     },
-    credentials: null,
     error: null
   },
   getters: {
@@ -45,6 +45,9 @@ export default new Vuex.Store({
         const auth = await signIn.signin(payload);
         commit("getSignInData", auth.data);
         commit("errorSignIn", null);
+        Cookies.set("auth-token", auth.data.token, {
+          expires: auth.data.expires
+        });
       } catch (e) {
         console.log(e);
         commit("errorSignIn", e);

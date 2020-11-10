@@ -136,7 +136,6 @@ export default {
   box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.15);
   padding-right: 20px;
   padding-left: 20px;
-  z-index: 1;
 }
 
 legend {
